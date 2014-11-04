@@ -12,7 +12,11 @@
 (* in the file LICENSE.                                                      *)
 (* ------------------------------------------------------------------------- *)
 
-open PPrintEngine
+#light "off"
+
+module FSharp.PPrint.Combinators
+
+open FSharp.PPrint.Engine
 
 (** A set of high-level combinators for building documents. *)
 

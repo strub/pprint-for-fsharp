@@ -12,6 +12,13 @@
 (* in the file LICENSE.                                                      *)
 (* ------------------------------------------------------------------------- *)
 
+#light "off"
+
+module FSharp.PPrint.Engine
+
+open Microsoft.FSharp.Compatibility.OCaml
+open FSharp.PPrint.Renderer
+
 (** A pretty-printing engine and a set of basic document combinators. *)
 
 (** {1 Building documents} *)
@@ -73,7 +80,7 @@ val blank: int -> document
     when forced to display on a single line, or a single newline character,
     otherwise. Note that there is no choice at this point: choices are encoded
     by the [group] combinator. *)
-val break: int -> document
+val break_: int -> document
 
 (** [doc1 ^^ doc2] is the concatenation of the documents [doc1] and [doc2]. *)
 val (^^): document -> document -> document
@@ -103,23 +110,6 @@ val ifflat: document -> document -> document
     upper left corner is the current position. *)
 val align: document -> document
 
-(** {1 Rendering documents} *)
-
-(** This renderer sends its output into an output channel. *)
-module ToChannel : PPrintRenderer.RENDERER
-  with type channel = out_channel
-   and type document = document
-
-(** This renderer sends its output into a memory buffer. *)
-module ToBuffer : PPrintRenderer.RENDERER
-  with type channel = Buffer.t
-   and type document = document
-
-(** This renderer sends its output into a formatter channel. *)
-module ToFormatter : PPrintRenderer.RENDERER
-  with type channel = Format.formatter
-   and type document = document
-
 (** {1 Defining custom documents} *)
 
 (** A width requirement is expressed as an integer, where the value [max_int]
@@ -131,14 +121,15 @@ val infinity : requirement
 (** An output channel is represented abstractly as an object equipped with
     methods for displaying one character and for displaying a substring. *)
 
-class type output = object
+type output =
+interface
 
   (** [char c] sends the character [c] to the output channel. *)
-  method char: char -> unit
+  abstract char: char -> unit
 
   (** [substring s ofs len] sends the substring of [s] delimited by the
       offset [ofs] and the length [len] to the output channel. *)
-  method substring: string -> int (* offset *) -> int (* length *) -> unit
+  abstract substring: string -> int (* offset *) -> int (* length *) -> unit
 
 end
 
@@ -171,7 +162,8 @@ type state = {
 
 (** A custom document is defined by implementing the following methods. *)
 
-class type custom = object
+type custom =
+interface
 
   (** A custom document must publish the width (i.e., the number of columns)
       that it would like to occupy if it is printed on a single line (that is,
@@ -179,7 +171,7 @@ class type custom = object
       document cannot be printed on a single line; this value causes any
       groups that contain this document to be dissolved. This method should
       in principle work in constant time. *)
-  method requirement: requirement
+  abstract requirement: requirement
 
   (** The method [pretty] is used by the main rendering algorithm. It has
       access to the output channel and to the algorithm's internal state, as
@@ -190,11 +182,11 @@ class type custom = object
       flattening mode is off, then there is no such obligation. The state must
       be updated in a manner that is consistent with what is sent to the
       output channel. *)
-  method pretty: output -> state -> int -> bool -> unit
+  abstract pretty: output -> state -> int -> bool -> unit
 
   (** The method [compact] is used by the compact rendering algorithm. It has
       access to the output channel only. *)
-  method compact: output -> unit
+  abstract compact: output -> unit
 
 end
 
@@ -225,3 +217,10 @@ val pretty: output -> state -> int -> bool -> document -> unit
     the method [compact]. *)
 val compact: output -> document -> unit
 
+(** {1 Rendering documents} *)
+
+(** This renderer sends its output into an output channel. *)
+val ToChannel : (out_channel -> output) -> Renderer<out_channel, document>
+
+(** This renderer sends its output into a memory buffer. *)
+val ToBuffer : (Buffer.t -> output) -> Renderer<Buffer.t, document>

@@ -1,3 +1,0 @@
-﻿module FSharp.PPrint
-
-let () = ()

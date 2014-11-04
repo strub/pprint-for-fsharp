@@ -12,7 +12,11 @@
 (* in the file LICENSE.                                                      *)
 (* ------------------------------------------------------------------------- *)
 
-open PPrintEngine
+#light "off"
+
+module FSharp.PPrint.Combinators
+
+open FSharp.PPrint.Engine
 
 (* ------------------------------------------------------------------------- *)
 
@@ -76,13 +80,13 @@ let precede   l x   = l ^^ x
 let terminate r x   = x ^^ r
 let enclose l r x   = l ^^ x ^^ r
 
-let squotes         = enclose squote squote
-let dquotes         = enclose dquote dquote
-let bquotes         = enclose bquote bquote
-let braces          = enclose lbrace rbrace
-let parens          = enclose lparen rparen
-let angles          = enclose langle rangle
-let brackets        = enclose lbracket rbracket
+let squotes         s = enclose squote squote s
+let dquotes         s = enclose dquote dquote s
+let bquotes         s = enclose bquote bquote s
+let braces          s = enclose lbrace rbrace s
+let parens          s = enclose lparen rparen s
+let angles          s = enclose langle rangle s
+let brackets        s = enclose lbracket rbracket s
 
 (* ------------------------------------------------------------------------- *)
 
@@ -175,7 +179,7 @@ let lines s =
   List.rev (chop [] 0)
 
 let arbitrary_string s =
-  separate (break 1) (lines s)
+  separate (break_ 1) (lines s)
 
 (* [split ok s] splits the string [s] at every occurrence of a character
    that satisfies the predicate [ok]. The substrings thus obtained are
@@ -259,7 +263,7 @@ let flow sep docs =
   flow_map sep (fun x -> x) docs
 
 let url s =
-  flow (break 0) (split (function '/' | '.' -> true | _ -> false) s)
+  flow (break_ 0) (split (function '/' | '.' -> true | _ -> false) s)
 
 (* ------------------------------------------------------------------------- *)
 
@@ -268,19 +272,19 @@ let url s =
 let hang i d =
   align (nest i d)
 
-let ( !^ ) = string
+let ( !^ ) s = string s
 
 let ( ^/^ ) x y =
-  x ^^ break 1 ^^ y
+  x ^^ break_ 1 ^^ y
 
 let prefix n b x y =
-  group (x ^^ nest n (break b ^^ y))
+  group (x ^^ nest n (break_ b ^^ y))
 
-let (^//^) =
-  prefix 2 1
+let (^//^) s1 s2 =
+  prefix 2 1 s1 s2
 
 let jump n b y =
-  group (nest n (break b ^^ y))
+  group (nest n (break_ b ^^ y))
 
 (* Deprecated.
 let ( ^@^  ) x y = group (x ^/^ y)
@@ -291,22 +295,22 @@ let infix n b op x y =
   prefix n b (x ^^ blank b ^^ op) y
 
 let surround n b opening contents closing =
-  group (opening ^^ nest n (       break b  ^^ contents) ^^        break b ^^ closing )
+  group (opening ^^ nest n (       break_ b  ^^ contents) ^^        break_ b ^^ closing )
 
 let soft_surround n b opening contents closing =
-  group (opening ^^ nest n (group (break b) ^^ contents) ^^ group (break b ^^ closing))
+  group (opening ^^ nest n (group (break_ b) ^^ contents) ^^ group (break_ b ^^ closing))
 
-let surround_separate n b void opening sep closing docs =
+let surround_separate n b void_ opening sep closing docs =
   match docs with
   | [] ->
-      void
+      void_
   | _ :: _ ->
       surround n b opening (separate sep docs) closing
 
-let surround_separate_map n b void opening sep closing f xs =
+let surround_separate_map n b void_ opening sep closing f xs =
   match xs with
   | [] ->
-      void
+      void_
   | _ :: _ ->
       surround n b opening (separate_map sep f xs) closing
 
