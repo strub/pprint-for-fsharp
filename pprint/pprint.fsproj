@@ -8,10 +8,11 @@
     <ProjectGuid>6d134ed9-8228-4f84-aa0d-d6581a11a09e</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>pprint</RootNamespace>
-    <AssemblyName>pprint</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AssemblyName>FSharpPPrint</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
     <Name>pprint</Name>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Release\pprint.XML</DocumentationFile>
+    <NoWarn>62</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FSharp.PowerPack">
