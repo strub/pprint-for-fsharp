@@ -8,8 +8,8 @@
     <ProjectGuid>6d134ed9-8228-4f84-aa0d-d6581a11a09e</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>pprint</RootNamespace>
-    <AssemblyName>FSharpPPrint</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <AssemblyName>FSharp.PPrint</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
     <Name>pprint</Name>
     <TargetFrameworkProfile />
@@ -35,28 +35,6 @@
     <DocumentationFile>bin\Release\pprint.XML</DocumentationFile>
     <NoWarn>62</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="FSharp.PowerPack">
-      <HintPath>..\3rdparty\fsharp-power-pack\FSharp.PowerPack.dll</HintPath>
-    </Reference>
-    <Reference Include="FSharp.PowerPack.Compatibility">
-      <HintPath>..\3rdparty\fsharp-power-pack\FSharp.PowerPack.Compatibility.dll</HintPath>
-    </Reference>
-    <Reference Include="mscorlib" />
-    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="PPrintRenderer.fs" />
-    <Compile Include="PPrintEngine.fsi" />
-    <Compile Include="PPrintEngine.fs" />
-    <Compile Include="PPrintCombinators.fsi" />
-    <Compile Include="PPrintCombinators.fs" />
-  </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>
@@ -73,6 +51,28 @@
     </Otherwise>
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
+  <ItemGroup>
+    <Compile Include="PPrintRenderer.fs" />
+    <Compile Include="PPrintEngine.fsi" />
+    <Compile Include="PPrintEngine.fs" />
+    <Compile Include="PPrintCombinators.fsi" />
+    <Compile Include="PPrintCombinators.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.PowerPack">
+      <HintPath>..\3rdparty\fsharp-power-pack\FSharp.PowerPack.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.PowerPack.Compatibility">
+      <HintPath>..\3rdparty\fsharp-power-pack\FSharp.PowerPack.Compatibility.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

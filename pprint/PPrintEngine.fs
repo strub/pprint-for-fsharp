@@ -630,8 +630,10 @@ type MakeRenderer<'channel> (output : 'channel -> output) =
     end
   end
 
-let ToChannel (output : out_channel -> output) =
+let ToChannel =
+  let output c = new channel_output (c) :> output in
   (new MakeRenderer<out_channel> (output) :> Renderer<out_channel, document>)
 
-let ToBuffer (output : Buffer.t -> output) =
+let ToBuffer =
+  let output b = new buffer_output (b) :> output in
   (new MakeRenderer<Buffer.t> (output) :> Renderer<Buffer.t, document>)

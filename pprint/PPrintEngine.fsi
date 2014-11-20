@@ -220,7 +220,7 @@ val compact: output -> document -> unit
 (** {1 Rendering documents} *)
 
 (** This renderer sends its output into an output channel. *)
-val ToChannel : (out_channel -> output) -> Renderer<out_channel, document>
+val ToChannel : Renderer<out_channel, document>
 
 (** This renderer sends its output into a memory buffer. *)
-val ToBuffer : (Buffer.t -> output) -> Renderer<Buffer.t, document>
+val ToBuffer : Renderer<Buffer.t, document>
