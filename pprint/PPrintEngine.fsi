@@ -16,7 +16,7 @@
 
 module FSharp.PPrint.Engine
 
-open Microsoft.FSharp.Compatibility.OCaml
+open FSharp.Compatibility.OCaml
 open FSharp.PPrint.Renderer
 
 (** A pretty-printing engine and a set of basic document combinators. *)
