@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>PPrintForFSharp</id>
+    <version>0.0.1</version>
+    <title>PPrintForFSharp</title>
+    <authors>strub</authors>
+    <owners>strub</owners>
+    <licenseUrl>https://github.com/strub/pprint-for-fsharp/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/strub/pprint-for-fsharp</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>F# port of the OCaml PPrint library</description>
+    <copyright>Copyright (c) strub 2017</copyright>
+    <tags>PPrint F# layout text format formatting Wadler Leijen Pottier Strub</tags>
+    <dependencies>
+      <dependency id="FSharp.Compatibility.OCaml" version="0.1.10" />
+      <dependency id="FSPowerPack.Community" version="3.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Debug\FSharp.PPrint.dll" target="lib\net40" />
+  </files>
+</package>
