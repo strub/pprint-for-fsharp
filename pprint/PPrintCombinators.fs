@@ -16,6 +16,7 @@
 
 module FSharp.PPrint.Combinators
 
+open FSharp.Compatibility.OCaml
 open FSharp.PPrint.Engine
 
 (* ------------------------------------------------------------------------- *)

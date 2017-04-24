@@ -16,7 +16,7 @@
 
 module FSharp.PPrint.Engine
 
-open Microsoft.FSharp.Compatibility.OCaml
+open FSharp.Compatibility.OCaml
 open FSharp.PPrint.Renderer
 
 (* A type of integers with infinity. *)
