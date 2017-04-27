@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PPrintForFSharp</id>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <title>PPrintForFSharp</title>
     <authors>strub</authors>
     <owners>strub</owners>
@@ -18,6 +18,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Debug\FSharp.PPrint.dll" target="lib\net40" />
+    <file src="bin\Release\FSharp.PPrint.dll" target="lib\net40" />
   </files>
 </package>
